@@ -2,6 +2,16 @@
 
 All notable changes to MatrixClock Improved Firmware are documented here.
 
+## v3.0.1 - 2026-09-02
+
+### Home Assistant and API
+
+- Added an optional per-message `scrolls=1` to `scrolls=5` API parameter, so
+  Home Assistant can choose the number of passes for an individual message.
+- Fixed the on-page message form to submit to the same address used to open
+  the web interface, so it continues to work when local web authentication is
+  enabled and the clock is accessed through a DNS name.
+
 ## v3.0.0 - 2026-09-01
 
 First public release of the modified MatrixClock firmware, derived from the
