@@ -84,18 +84,37 @@ display, API, authentication, calibration, and firmware-update settings.
 `MatrixClock_Improved_v3_1_0_OTA.bin` is an OTA update for compatible
 MatrixClock Improved installations. The original v3.0.0 OTA update was tested
 from the original HACK LABS firmware on compatible 4 MB ESP8266 MatrixClock
-hardware.
+hardware. This provides a direct web-based upgrade path from the original
+firmware; the full 4 MB factory image is not required for a normal upgrade.
+
+### Upgrading directly from the original HACK LABS firmware
+
+1. Find the clock's current IP address on the local network.
+2. Open `http://<device-ip>/update` in a browser. For example:
+   `http://192.168.0.10/update`.
+3. Sign in to the original firmware's update page with:
+   - Username: `nick`
+   - Password: `nick`
+4. Select `MatrixClock_Improved_v3_1_0_OTA.bin`.
+5. Start the update and wait for the clock to restart. Do not remove power or
+   reset the clock while the firmware is being written.
+6. Follow the MatrixClock Improved first-use setup shown after restart. If the
+   clock cannot reuse the existing Wi-Fi profile, connect to the open
+   `MatrixClock` setup network and open `http://192.168.4.1`.
+
+### Updating an existing MatrixClock Improved installation
 
 1. Find the clock's current IP address.
-2. Open `http://<device-ip>/update` in a browser. For example:
-   `http://192.168.0.10/update`
-3. Sign in with the clock's current username and password, if web security is
-   enabled. A newly reset v3.1.0 clock asks you to choose credentials on its
-   first normal-page visit; leave both fields blank to keep local web access
-   open.
+2. Open `http://<device-ip>/update` in a browser.
+3. Sign in with the clock's current username and password if web security is
+   enabled.
 4. Select `MatrixClock_Improved_v3_1_0_OTA.bin`.
 5. Select **Upload and reboot** and wait for the clock to restart. Do not remove
    power during the update.
+
+A newly reset MatrixClock Improved installation asks you to choose credentials
+on its first normal-page visit. Leave both fields blank to keep local web access
+open.
 
 The OTA page must never be given the 4 MB factory image.
 
@@ -213,6 +232,40 @@ Leave the MatrixClock username and password blank to disable web security; in
 that case the API does not require credentials. Messages are local-network
 only, use HTTP rather than HTTPS, and are unavailable while the chronograph
 is open. They can be cancelled from the clock's web page or physical button.
+
+The DS3231 RTC temperature shown in Device info is also available as a
+lightweight numeric API response:
+
+```text
+GET http://CLOCK-IP/api/temperature
+```
+
+```json
+{"temperature_c":22.25}
+```
+
+Home Assistant can poll it once per minute without opening the clock's main
+page or its live-display connection:
+
+```yaml
+rest:
+  - resource: "http://CLOCK-IP/api/temperature"
+    authentication: basic
+    username: !secret matrixclock_username
+    password: !secret matrixclock_password
+    scan_interval: 60
+    sensor:
+      - name: MatrixClock RTC temperature
+        unique_id: matrixclock_rtc_temperature
+        value_template: "{{ value_json.temperature_c }}"
+        device_class: temperature
+        state_class: measurement
+        unit_of_measurement: "°C"
+```
+
+Omit `authentication`, `username`, and `password` when MatrixClock web
+security is disabled. This is the RTC's internal temperature and should not be
+treated as a calibrated room-temperature measurement.
 
 ## Verify downloaded files
 
