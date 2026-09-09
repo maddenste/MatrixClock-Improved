@@ -2,6 +2,21 @@
 
 All notable changes to MatrixClock Improved Firmware are documented here.
 
+## v3.1.1 - 2026-09-09
+
+- Set a stable, readable DHCP hostname before Wi-Fi association. Each clock
+  now appears on the LAN as `MatrixClock-<CHIP-ID>` (for example,
+  `MatrixClock-20A117`) instead of the ESP8266 default `ESP-<CHIP-ID>`.
+- Link the user-visible firmware build label to the single public-release
+  version constant, preventing the update page and firmware header from
+  drifting apart in future releases.
+- Include the DS3231 RTC internal-temperature reading in Device info and
+  document the lightweight `/api/temperature` Home Assistant REST-sensor
+  integration, which returns its native 0.25 °C value without opening the
+  main web page or live display connection.
+- Publish a matching clean 4 MB Factory recovery image captured after the
+  tested v3.1.1 firmware was flashed to the supported MatrixClock hardware.
+
 ## v3.1.0 - 2026-09-07
 
 - Learn oscillator drift from raw 64-bit elapsed time, independently of
@@ -36,6 +51,9 @@ All notable changes to MatrixClock Improved Firmware are documented here.
   Wi-Fi, authentication or calibration data. Factory reset restores defaults.
 - Add a live days/hours/minutes/seconds uptime counter to Device info using
   the existing one-second polling request and the 64-bit elapsed timer.
+- Show the DS3231 RTC temperature beneath uptime, rounded to the nearest
+  0.5 °C, and expose it through the authenticated `/api/temperature` endpoint
+  at its native 0.25 °C resolution for lightweight Home Assistant polling.
 - Show the next NTP check as a fixed local time in Device info while retaining
   the live countdown in Clock accuracy calibration and the waiting message
   when clock activity postpones an overdue check.

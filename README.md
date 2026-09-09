@@ -1,4 +1,4 @@
-# MatrixClock Improved Firmware v3.1.0
+# MatrixClock Improved Firmware v3.1.1
 
 An enhanced public-release firmware for the original HACK LABS MatrixClock
 hardware, maintained and extended by Steve Madden. This release is derived
@@ -14,26 +14,22 @@ Original project source: [HACK Labs MatrixClock](https://github.com/hack-apollo/
 
 | File | Purpose |
 | --- | --- |
-| `MatrixClock_Improved_v3_1_0.ino` | Complete corresponding source code. |
-| `MatrixClock_Improved_v3_1_0_OTA.bin` | Firmware update file for the clock's web-based OTA update page. |
-| `MatrixClock_Improved_v3_0_0_Factory_4MB.bin` | Retained full-flash USB recovery image; install the v3.1.0 OTA file afterwards. |
-| `original-firmware/HACK_LABS_MatrixClock_v2_2_Original_Archive.rar` | Original HACK LABS v2.2 archive, retained as a GitHub Release asset for reference and recovery. |
+| `MatrixClock_Improved_v3_1_1.ino` | Complete corresponding source code. |
+| `MatrixClock_Improved_v3_1_1_OTA.bin` | Firmware update file for the clock's web-based OTA update page. |
+| `MatrixClock_Improved_v3_1_1_Factory_4MB.bin` | Matching clean 4 MB full-flash USB recovery image. |
 | `screenshots/` | Public-safe examples of the local web interface. |
 | `SHA256SUMS.txt` | SHA-256 integrity checks for the distributed firmware files. |
 
-The retained v3.0.0 clean 4 MB recovery image remains available for a full USB
-recovery install. It should be followed by this v3.1.0 OTA update.
-
-The original-firmware archive is too large for the normal repository upload
-workflow. Attach it to the GitHub Release, alongside the two firmware binaries,
-rather than committing it to the repository.
+The matching v3.1.1 clean 4 MB recovery image is available for a complete USB
+recovery install when the web updater cannot be used.
 
 ## Web interface screenshots
 
-These screenshots were captured from a running v3.1.0 clock. Network-specific
-values have been blurred for privacy; calibration figures and selected settings
-are examples from that installation and will differ on another clock. No
-passwords or web authentication credentials are shown.
+These screenshots were captured from a running v3.1.0 clock. Their interface
+layout remains representative of v3.1.1. Network-specific values have been
+blurred for privacy; calibration figures and selected settings are examples
+from that installation and will differ on another clock. No passwords or web
+authentication credentials are shown.
 
 ### Main page: live status, calibration and API messaging
 
@@ -53,9 +49,9 @@ passwords or web authentication credentials are shown.
   4 MB flash.
 - The OTA file is the tested upgrade path from the original HACK LABS firmware
   on compatible hardware.
-- The v3.0.0 full 4 MB factory image overwrites the entire flash. It remains
-  the recovery option for a failed OTA update or an unknown/older compatible
-  firmware; update it to v3.1.0 through the web OTA page afterwards.
+- The v3.1.1 full 4 MB Factory image overwrites the entire flash. Use it for
+  a failed OTA update or an unknown/older compatible firmware when a clean
+  USB recovery install is needed.
 - Neither firmware image should be written to a different ESP8266 product.
 - Web authentication and the API are designed for a trusted local network.
   They use HTTP, not HTTPS; do not expose the clock directly to the internet
@@ -81,7 +77,7 @@ display, API, authentication, calibration, and firmware-update settings.
 
 ## Installing the OTA update
 
-`MatrixClock_Improved_v3_1_0_OTA.bin` is an OTA update for compatible
+`MatrixClock_Improved_v3_1_1_OTA.bin` is an OTA update for compatible
 MatrixClock Improved installations. The original v3.0.0 OTA update was tested
 from the original HACK LABS firmware on compatible 4 MB ESP8266 MatrixClock
 hardware. This provides a direct web-based upgrade path from the original
@@ -95,7 +91,7 @@ firmware; the full 4 MB factory image is not required for a normal upgrade.
 3. Sign in to the original firmware's update page with:
    - Username: `nick`
    - Password: `nick`
-4. Select `MatrixClock_Improved_v3_1_0_OTA.bin`.
+4. Select `MatrixClock_Improved_v3_1_1_OTA.bin`.
 5. Start the update and wait for the clock to restart. Do not remove power or
    reset the clock while the firmware is being written.
 6. Follow the MatrixClock Improved first-use setup shown after restart. If the
@@ -108,7 +104,7 @@ firmware; the full 4 MB factory image is not required for a normal upgrade.
 2. Open `http://<device-ip>/update` in a browser.
 3. Sign in with the clock's current username and password if web security is
    enabled.
-4. Select `MatrixClock_Improved_v3_1_0_OTA.bin`.
+4. Select `MatrixClock_Improved_v3_1_1_OTA.bin`.
 5. Select **Upload and reboot** and wait for the clock to restart. Do not remove
    power during the update.
 
@@ -120,9 +116,8 @@ The OTA page must never be given the 4 MB factory image.
 
 ## Clean recovery install over USB
 
-Use the v3.0.0 factory image when the clock cannot be reached over the web
-interface, or when a completely clean installation is wanted. Once recovered,
-install the v3.1.0 OTA file through the web interface.
+Use the v3.1.1 Factory image when the clock cannot be reached over the web
+interface, or when a completely clean installation is wanted.
 
 1. Install or download [Espressif esptool](https://github.com/espressif/esptool/releases).
    Its official [ESP8266 command documentation](https://docs.espressif.com/projects/esptool/en/latest/esp8266/esptool/basic-options.html)
@@ -132,22 +127,12 @@ install the v3.1.0 OTA file through the web interface.
 3. Replace `COM3` below with the clock's Windows COM port:
 
 ```cmd
-esptool --chip esp8266 --port COM3 --baud 115200 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size 4MB 0x0 MatrixClock_Improved_v3_0_0_Factory_4MB.bin
+esptool --chip esp8266 --port COM3 --baud 115200 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size 4MB 0x0 MatrixClock_Improved_v3_1_1_Factory_4MB.bin
 ```
 
 The factory image already covers the whole flash, so a separate `erase_flash`
 command is not required before writing it. It will erase all existing firmware,
 Wi-Fi data, settings, and saved calibration information.
-
-## Original firmware archive
-
-`HACK_LABS_MatrixClock_v2_2_Original_Archive.rar` is supplied as an optional
-release asset. It is an unmodified archive of the original HACK LABS MatrixClock
-v2.2 package, included for provenance, reference, and optional rollback only.
-It contains the original source, firmware binaries, hardware files, README, and
-GPL v3 license.
-
-It is not required to install or use MatrixClock Improved Firmware v3.1.0.
 
 ## Building from source with Arduino IDE
 
@@ -164,7 +149,7 @@ Upload speed:   115200
 ```
 
 1. Install the ESP8266 boards package if it is not already present.
-2. Open `MatrixClock_Improved_v3_1_0.ino` from its matching folder.
+2. Open `MatrixClock_Improved_v3_1_1.ino` from its matching folder.
 3. Select **Tools > Board > ESP8266 Boards > NodeMCU 1.0 (ESP-12E Module)**.
 4. Select the clock's serial port.
 5. Ensure the board is configured for 4 MB flash, then use **Verify** or
@@ -188,7 +173,7 @@ form-encoded HTTP POST request:
 POST http://CLOCK-IP/api/message
 Content-Type: application/x-www-form-urlencoded
 
-message=MatrixClock v3.1.0&scrolls=2
+message=MatrixClock v3.1.1&scrolls=2
 ```
 
 If web security is enabled, include the MatrixClock username and password.
@@ -202,7 +187,7 @@ Invoke-WebRequest `
   -Method POST `
   -Credential $credential `
   -ContentType "application/x-www-form-urlencoded" `
-  -Body "message=MatrixClock v3.1.0&scrolls=2"
+  -Body "message=MatrixClock v3.1.1&scrolls=2"
 ```
 
 For Home Assistant, store the credentials in `secrets.yaml` and use a REST
@@ -272,8 +257,8 @@ treated as a calibrated room-temperature measurement.
 On Windows, run this from the release folder:
 
 ```cmd
-certutil -hashfile MatrixClock_Improved_v3_1_0_OTA.bin SHA256
-certutil -hashfile MatrixClock_Improved_v3_0_0_Factory_4MB.bin SHA256
+certutil -hashfile MatrixClock_Improved_v3_1_1_OTA.bin SHA256
+certutil -hashfile MatrixClock_Improved_v3_1_1_Factory_4MB.bin SHA256
 ```
 
 Compare both results with `SHA256SUMS.txt`. The corresponding source is
