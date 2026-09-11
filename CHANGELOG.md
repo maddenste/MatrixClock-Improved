@@ -2,6 +2,54 @@
 
 All notable changes to MatrixClock Improved Firmware are documented here.
 
+## v3.1.2 - 2026-09-11
+
+- Allow two concurrent main-page live-display viewers instead of one. This
+  prevents a short-lived browser or network probe from unnecessarily blocking
+  an already open main page, while retaining a fixed limit on high-rate polls.
+
+- Show the boot IP-address marquee after both successful and failed startup
+  NTP checks, before the clock scrolls in. The existing RTC-fallback warning
+  sequence still follows afterwards when NTP is unavailable.
+
+- Publish v3.1.2 as an OTA-only release. Document the supported clean-recovery
+  route: install the separately versioned v3.1.1 Factory 4 MB image by USB,
+  complete Wi-Fi and first-use setup, then apply the v3.1.2 OTA update.
+
+- During a startup NTP failure, start a rate-compensated software-clock
+  holdover from a plausible DS3231 calendar when a verified saved correction
+  exists. Continue NTP recovery checks; the first accepted reply re-anchors
+  time and updates the RTC without treating RTC phase as a drift measurement.
+
+- Allow automatic date scrolling to continue on the RTC-backed clock when NTP
+  is unavailable. The displayed date remains dependent on the RTC's last valid
+  synchronisation and backup battery.
+
+- Change the RTC-fallback NTP reminder to `No sync-Set NTP`. It now runs
+  twice continuously at 01 seconds past each hour, rather than twice per
+  minute, before the RTC-backed clock returns. On startup NTP failure, show
+  the clock for five seconds after `Err!`, then show the same two-pass reminder.
+
+- Replace offset-only location choices with 40 regional timezone presets adapted
+  from CH-899, with explicit automatic and fixed-standard-time rules. Correct
+  DST coverage and split locations with different rules, including Vancouver,
+  Almaty and Auckland.
+- Preserve existing named-region selections, fixed UTC offsets, and valid custom
+  rules across upgrades without changing the EEPROM layout. Identify legacy
+  fixed offsets in Settings rather than guessing the user's location.
+- Validate timezone settings before saving; reject malformed, missing or
+  overlong active custom rules. Add a recovery notice for invalid stored
+  timezone values and clarify Automatic, Disabled and Custom rule modes.
+- Add desktop timezone verification against IANA data, including seasonal
+  transition boundaries. NTP calibration and chronograph timing are unchanged.
+
+- Refine calibration labels and status messages, including Active compensation,
+  Last NTP offset, and Measuring drift. Describe offsets as ahead of or behind
+  NTP to distinguish time alignment from drift rate.
+- Show calibration progress against the two required rate estimates and report
+  Validated once compensation is verified. Retain the existing calibration
+  calculations, validation thresholds, check schedule, and timing behaviour.
+
 ## v3.1.1 - 2026-09-09
 
 - Set a stable, readable DHCP hostname before Wi-Fi association. Each clock
