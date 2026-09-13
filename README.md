@@ -10,6 +10,8 @@ build is licensed under GNU GPL v3; see [LICENSE](LICENSE).
 
 Original project source: [HACK Labs MatrixClock](https://github.com/hack-apollo/hack_clock).
 
+[![MatrixClock Improved v3.1.2](screenshots/matrixclock-manual-cover-v3-1-2.png)](https://github.com/maddenste/MatrixClock-Improved/releases/latest)
+
 ## Release contents
 
 | File | Purpose |
