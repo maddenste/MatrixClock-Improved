@@ -15,19 +15,15 @@ Original project source: [HACK Labs MatrixClock](https://github.com/hack-apollo/
 | File | Purpose |
 | --- | --- |
 | `MatrixClock_Improved_v3_1_2.ino` | Complete corresponding source code. |
-| `MatrixClock_Improved_v3_1_2_OTA.bin` | Firmware update file for the clock's web-based OTA update page. |
+| `MatrixClock_Improved_v3_1_2_OTA.bin` | Single firmware file for web OTA updates and clean USB installation. |
+| `MatrixClock_Improved_v3_1_2_User_Manual.pdf` | Illustrated installation, setup and operating guide. |
 | `screenshots/` | Public-safe examples of the local web interface. |
 | `SHA256SUMS.txt` | SHA-256 integrity check for the distributed v3.1.2 OTA file. |
 
-v3.1.2 is an OTA-only release. For a completely clean USB recovery install,
-first use the verified v3.1.1 Factory 4 MB image from the
-[v3.1.1 release](https://github.com/maddenste/MatrixClock-Improved/releases/tag/v3.1.1),
-then install the v3.1.2 OTA file through its web updater.
-
-> **Release preparation:** build and test the matching v3.1.2 OTA file before
-> publishing, then regenerate `SHA256SUMS.txt` for that file. The v3.1.1
-> Factory image remains a separately versioned recovery image and must never
-> be renamed or given a v3.1.2 checksum.
+v3.1.2 uses one firmware binary for both supported installation methods. Use
+`MatrixClock_Improved_v3_1_2_OTA.bin` on the web update page, or write the same
+file at address `0x000000` with esptool after erasing the ESP8266 for a clean
+USB installation. A separate full-flash or Factory image is not required.
 
 ## Web interface screenshots
 
@@ -55,10 +51,9 @@ authentication credentials are shown.
   4 MB flash.
 - The OTA file is the tested upgrade path from the original HACK LABS firmware
   on compatible hardware.
-- The v3.1.1 Factory 4 MB image overwrites the entire flash. Use it only for
-  a failed OTA update or an unknown/older compatible firmware when a clean
-  USB recovery install is needed, then apply the v3.1.2 OTA update.
-- Neither firmware image should be written to a different ESP8266 product.
+- For a clean USB installation, erase the ESP8266 and write the same v3.1.2
+  OTA binary at address `0x000000` using esptool.
+- The firmware binary must not be written to a different ESP8266 product.
 - Web authentication and the API are designed for a trusted local network.
   They use HTTP, not HTTPS; do not expose the clock directly to the internet
   or forward its web port. Use a VPN for remote access instead.
@@ -122,11 +117,12 @@ do not replace testing on the ESP8266 or predict future legislative changes.
 
 ## Installing the OTA update
 
-`MatrixClock_Improved_v3_1_2_OTA.bin` is an OTA update for compatible
-MatrixClock Improved installations. The original v3.0.0 OTA update was tested
-from the original HACK LABS firmware on compatible 4 MB ESP8266 MatrixClock
-hardware. This provides a direct web-based upgrade path from the original
-firmware; the full 4 MB factory image is not required for a normal upgrade.
+`MatrixClock_Improved_v3_1_2_OTA.bin` is the single distributed firmware file.
+It can be installed through the web updater on a compatible clock, or written
+at address `0x000000` after a complete ESP8266 erase for a clean USB install.
+The original v3.0.0 OTA update was tested from the original HACK LABS firmware
+on compatible 4 MB ESP8266 MatrixClock hardware, providing a direct web-based
+upgrade path from the original firmware.
 
 ### Upgrading directly from the original HACK LABS firmware
 
@@ -139,9 +135,13 @@ firmware; the full 4 MB factory image is not required for a normal upgrade.
 4. Select `MatrixClock_Improved_v3_1_2_OTA.bin`.
 5. Start the update and wait for the clock to restart. Do not remove power or
    reset the clock while the firmware is being written.
-6. Follow the MatrixClock Improved first-use setup shown after restart. If the
-   clock cannot reuse the existing Wi-Fi profile, connect to the open
-   `MatrixClock` setup network and open `http://192.168.4.1`.
+6. Confirm that MatrixClock Improved has started. Then open **Settings** and
+   select **Factory reset**. This is recommended after upgrading from the
+   original firmware so old settings cannot remain in use.
+7. After the factory reset, connect to the open `MatrixClock` setup network,
+   open `http://192.168.4.1`, and select the home Wi-Fi network again.
+8. Open the IP address shown during boot. On the first normal-page visit,
+   choose a username and password or leave both fields blank for no web login.
 
 ### Updating an existing MatrixClock Improved installation
 
@@ -157,13 +157,12 @@ A newly reset MatrixClock Improved installation asks you to choose credentials
 on its first normal-page visit. Leave both fields blank to keep local web access
 open.
 
-The OTA page must never be given the 4 MB factory image.
+## Clean installation over USB
 
-## Clean recovery install over USB, then update to v3.1.2
-
-Use the v3.1.1 Factory image when the clock cannot be reached over the web
-interface, or when a completely clean installation is wanted. It installs
-v3.1.1 first; complete the steps below to finish on v3.1.2.
+Use this method when the clock cannot be reached through its web interface, or
+when a completely clean installation is wanted. It erases all flash contents,
+including the existing firmware, Wi-Fi data, settings and calibration records,
+then installs v3.1.2 directly from the normal OTA binary.
 
 1. Install or download [Espressif esptool](https://github.com/espressif/esptool/releases).
    Its official [ESP8266 command documentation](https://docs.espressif.com/projects/esptool/en/latest/esp8266/esptool/basic-options.html)
@@ -173,21 +172,21 @@ v3.1.1 first; complete the steps below to finish on v3.1.2.
 3. Replace `COM3` below with the clock's Windows COM port:
 
 ```cmd
-esptool --chip esp8266 --port COM3 --baud 115200 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size 4MB 0x0 MatrixClock_Improved_v3_1_1_Factory_4MB.bin
+esptool --chip esp8266 --port COM3 --baud 115200 erase_flash
 ```
 
-The factory image already covers the whole flash, so a separate `erase_flash`
-command is not required before writing it. It will erase all existing firmware,
-Wi-Fi data, settings, and saved calibration information.
+4. When the erase completes successfully, write the v3.1.2 firmware at address
+   `0x000000`:
 
-4. Connect to the `MatrixClock` setup Wi-Fi network and open
+```cmd
+esptool --chip esp8266 --port COM3 --baud 115200 write_flash 0x000000 MatrixClock_Improved_v3_1_2_OTA.bin
+```
+
+5. Connect to the `MatrixClock` setup Wi-Fi network and open
    `http://192.168.4.1/` to connect the clock to the home network.
-5. Open the IP address shown during the next boot. On the first normal-page
+6. Open the IP address shown during the next boot. On the first normal-page
    visit, choose new web credentials or leave both fields blank for no web
    login.
-6. Open `http://<device-ip>/update`, select
-   `MatrixClock_Improved_v3_1_2_OTA.bin`, then choose **Upload and reboot**.
-   Do not remove power while the OTA update is running.
 
 ## Building from source with Arduino IDE
 
@@ -315,10 +314,9 @@ On Windows, run this from the release folder:
 certutil -hashfile MatrixClock_Improved_v3_1_2_OTA.bin SHA256
 ```
 
-Compare the result with the v3.1.2 `SHA256SUMS.txt`. If using the v3.1.1
-Factory image for USB recovery, download it and verify its checksum from the
-[v3.1.1 release](https://github.com/maddenste/MatrixClock-Improved/releases/tag/v3.1.1).
-The corresponding source is maintained in this repository.
+Compare the result with the v3.1.2 `SHA256SUMS.txt`. The same verified OTA file
+is used for web updates and clean USB installations. The corresponding source
+is maintained in this repository.
 
 ## Licence and attribution
 

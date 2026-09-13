@@ -12,9 +12,13 @@ All notable changes to MatrixClock Improved Firmware are documented here.
   NTP checks, before the clock scrolls in. The existing RTC-fallback warning
   sequence still follows afterwards when NTP is unavailable.
 
-- Publish v3.1.2 as an OTA-only release. Document the supported clean-recovery
-  route: install the separately versioned v3.1.1 Factory 4 MB image by USB,
-  complete Wi-Fi and first-use setup, then apply the v3.1.2 OTA update.
+- Simplify installation around one distributed firmware file. The v3.1.2 OTA
+  binary is used for web updates and can also be written directly at address
+  `0x000000` after erasing the ESP8266 for a clean USB installation. A separate
+  full-flash Factory image is no longer required.
+- Recommend using MatrixClock Improved's Factory reset after a direct OTA
+  upgrade from the original HACK LABS firmware, preventing obsolete settings
+  from remaining in use before normal setup.
 
 - During a startup NTP failure, start a rate-compensated software-clock
   holdover from a plausible DS3231 calendar when a verified saved correction
@@ -62,8 +66,8 @@ All notable changes to MatrixClock Improved Firmware are documented here.
   document the lightweight `/api/temperature` Home Assistant REST-sensor
   integration, which returns its native 0.25 °C value without opening the
   main web page or live display connection.
-- Publish a matching clean 4 MB Factory recovery image captured after the
-  tested v3.1.1 firmware was flashed to the supported MatrixClock hardware.
+- Document serial recovery and clean installation on the supported 4 MB
+  MatrixClock hardware.
 
 ## v3.1.0 - 2026-09-07
 
@@ -163,8 +167,8 @@ original HACK LABS MatrixClock v2.2 package.
 
 - Added access-point Wi-Fi provisioning and clean-install handling.
 - Added persistent settings with product and schema migration safeguards.
-- Added factory reset, clean 4 MB recovery image support, and local OTA
-  firmware updates.
+- Added factory reset, clean serial-install handling, and local OTA firmware
+  updates.
 - Improved runtime efficiency, memory use, diagnostics, and recovery paths.
 
 ### Web interface and integration
