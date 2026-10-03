@@ -44,6 +44,10 @@ python -B tools/verify_timezone_presets.py
 These checks exercise the source preset data and a desktop rule model; they
 do not replace testing on the ESP8266 or predict future legislative changes.
 
+## Hardware reference
+
+The original HACK LABS project provides [hardware reference files](https://github.com/hack-apollo/hack_clock/tree/master/hardware). Check them against your actual board; they do not establish compatibility with every clock sold under a similar name.
+
 ## Release files
 
 The complete corresponding source is [MatrixClock_Improved_v3_1_2.ino](../MatrixClock_Improved_v3_1_2.ino). Compiled firmware and checksums are distributed through [GitHub Releases](https://github.com/maddenste/MatrixClock-Improved/releases/latest).

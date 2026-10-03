@@ -119,3 +119,5 @@ rest:
 Omit `authentication`, `username`, and `password` when MatrixClock web
 security is disabled. This is the RTC's internal temperature and should not be
 treated as a calibrated room-temperature measurement.
+
+For further configuration and automation examples, see Home Assistant's official [RESTful Command guide](https://www.home-assistant.io/integrations/rest_command/).

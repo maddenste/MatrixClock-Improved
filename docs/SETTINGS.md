@@ -10,6 +10,10 @@ The clock has a five-minute settling period and checks NTP every two hours. Unce
 
 **This is software-clock drift calibration, not DS3231 hardware calibration.** The RTC remains the battery-backed backup clock. No guaranteed accuracy figure is claimed for every device or network.
 
+## NTP server
+
+For help choosing a time server, see the [NTP Pool's usage guidance](https://www.ntppool.org/en/use.html). Enter the server hostname in the clock's NTP settings, not the website address.
+
 ## Timezones
 
 In **Settings > Time settings**, select a location, then choose:
