@@ -14,38 +14,64 @@ form-encoded HTTP POST request:
 POST http://CLOCK-IP/api/message
 Content-Type: application/x-www-form-urlencoded
 
-message=MatrixClock v3.1.2&scrolls=2
+message=MatrixClock%20v3.1.2&scrolls=2
 ```
 
 If web security is enabled, include the MatrixClock username and password.
-PowerShell can prompt for them without putting the password in your command
-history:
+This example works with Windows PowerShell 5.1 and PowerShell 7. It prompts
+for credentials and encodes the message automatically. Replace `CLOCK-IP`
+with your clock's address:
 
 ```powershell
 $credential = Get-Credential
-Invoke-WebRequest `
-  -Uri "http://CLOCK-IP/api/message" `
-  -Method POST `
-  -Credential $credential `
-  -ContentType "application/x-www-form-urlencoded" `
-  -Body "message=MatrixClock v3.1.2&scrolls=2"
+$request = @{
+  Uri = "http://CLOCK-IP/api/message"
+  Method = "POST"
+  Credential = $credential
+  UseBasicParsing = $true
+  ContentType = "application/x-www-form-urlencoded"
+  Body = @{ message = "MatrixClock v3.1.2"; scrolls = 2 }
+}
+if ($PSVersionTable.PSVersion.Major -ge 6) {
+  $request.Authentication = "Basic"
+  $request.AllowUnencryptedAuthentication = $true
+}
+Invoke-WebRequest @request
 ```
 
-For Home Assistant, store the credentials in `secrets.yaml` and use a REST
-command:
+PowerShell 7 requires explicit permission to send credentials over HTTP.
+This is not encryption: use this example only on a trusted LAN. If clock
+security is disabled, omit the credential prompt and the `Credential` entry,
+and omit the entire `if` block.
+
+For Home Assistant, store the credentials in `secrets.yaml` and add this REST
+command to `configuration.yaml`. If you already have a `rest_command:` section,
+add `matrixclock_message` beneath it rather than creating a second section:
 
 ```yaml
 rest_command:
   matrixclock_message:
     url: "http://CLOCK-IP/api/message"
     method: POST
+    authentication: basic
     username: !secret matrixclock_username
     password: !secret matrixclock_password
     content_type: "application/x-www-form-urlencoded"
-    payload: "message={{ message }}&scrolls={{ scrolls | default(1) }}"
+    payload: "message={{ message | urlencode }}&scrolls={{ scrolls | default(1) | int }}"
 ```
 
-Call it with a service action such as:
+Encoding preserves characters such as `&` and `+` rather than interpreting
+them as form separators. Use a scroll count from 1 to 5. Add these entries to
+`secrets.yaml`, replacing the example values:
+
+```yaml
+matrixclock_username: "your-clock-username"
+matrixclock_password: "your-clock-password"
+```
+
+Check the Home Assistant configuration and restart Home Assistant after adding
+the command. Then call it from **Developer tools > Actions**, a script or an
+automation:
 
 ```yaml
 action: rest_command.matrixclock_message
@@ -55,7 +81,8 @@ data:
 ```
 
 Leave the MatrixClock username and password blank to disable web security; in
-that case the API does not require credentials. Messages are local-network
+that case the API does not require credentials; omit `authentication`,
+`username` and `password` from the REST command. Messages are local-network
 only, use HTTP rather than HTTPS, and are unavailable while the chronograph
 is open. They can be cancelled from the clock's web page or physical button.
 

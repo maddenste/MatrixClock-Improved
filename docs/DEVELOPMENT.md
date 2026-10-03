@@ -19,10 +19,13 @@ Upload speed:   115200
 ```
 
 1. Install the ESP8266 boards package if it is not already present.
-2. Open `MatrixClock_Improved_v3_1_2.ino` from its matching folder.
-3. Select **Tools > Board > ESP8266 Boards > NodeMCU 1.0 (ESP-12E Module)**.
-4. Select the clock's serial port.
-5. Ensure the board is configured for 4 MB flash, then use **Verify** or
+2. Create a folder named `MatrixClock_Improved_v3_1_2` and copy the repository's
+   `MatrixClock_Improved_v3_1_2.ino` into it. Arduino requires the folder and
+   sketch to share the same name. Keep the repository copy unchanged.
+3. Open that copied `.ino` in Arduino IDE.
+4. Select **Tools > Board > ESP8266 Boards > NodeMCU 1.0 (ESP-12E Module)**.
+5. Select the clock's serial port.
+6. Ensure the board is configured for 4 MB flash, then use **Verify** or
    **Upload**.
 
 The libraries used by this sketch (`SPI`, `Ticker`, `ESP8266WiFi`,

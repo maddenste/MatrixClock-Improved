@@ -158,7 +158,8 @@ original HACK LABS MatrixClock v2.2 package.
 
 ### Timekeeping
 
-- Added accurate NTP synchronisation with RTC fallback.
+- Improved the existing NTP timekeeping with RTC fallback and more robust
+  synchronisation handling.
 - Added configurable timezone, daylight-saving, and NTP-provider settings.
 - Added filtered oscillator-drift calibration with stored compensation.
 - Added configurable daily reboot behaviour.
@@ -167,8 +168,8 @@ original HACK LABS MatrixClock v2.2 package.
 
 - Added access-point Wi-Fi provisioning and clean-install handling.
 - Added persistent settings with product and schema migration safeguards.
-- Added factory reset, clean serial-install handling, and local OTA firmware
-  updates.
+- Added factory reset and clean serial-install handling; retained and improved
+  the existing local OTA firmware-update route.
 - Improved runtime efficiency, memory use, diagnostics, and recovery paths.
 
 ### Web interface and integration
