@@ -64,9 +64,9 @@ Restart modes let you choose no scheduled restart, a daily restart or recovery f
 
 Factory reset clears saved settings, Wi-Fi and calibration. Resetting drift calibration clears its measurements and restarts learning; it is separate from a factory reset.
 
-## Multi-function button
+## MFB
 
-The firmware repurposes the existing GPIO0 button for everyday controls; no extra button or wiring is needed. The hardware reset button remains separate.
+The MFB (multi-function button) repurposes the existing GPIO0 button for everyday controls; no extra button or wiring is needed. The hardware reset button remains separate.
 
 - **Clock display:** short press to scroll the date; hold for one second, then release, to enter the stopwatch.
 - **Stopwatch:** short press to start, stop or resume timing.

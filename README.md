@@ -15,7 +15,7 @@ In everyday use, the clock stays very closely aligned with NTP time, maintaining
 - **Flexible timezone and DST settings:** choose from 40 regional presets, disable seasonal changes or enter a custom POSIX rule.
 - **More display control:** orientation, brightness, separators, animations and date scrolling, with display changes applied without a reboot.
 - **Added stopwatch:** normal and hundredths-of-a-second modes, recent results and extended timing, controlled using the clock's existing buttons—no additional hardware required.
-- **Multi-function button:** show the date, control the stopwatch, cancel messages and perform a warning-protected factory reset using the existing button. See [button controls](docs/SETTINGS.md#multi-function-button).
+- **MFB:** the multi-function button shows the date, controls the stopwatch, cancels messages and provides a warning-protected factory reset using the existing button. See [button controls](docs/SETTINGS.md#mfb).
 - **A rebuilt web interface:** separate settings and live status, a display preview, uptime, NTP diagnostics and calibration information.
 - **Home Assistant integration:** send scrolling messages with a selectable number of passes and read the RTC's internal temperature through a local HTTP API.
 - **Simpler setup and maintenance:** phone-based Wi-Fi setup, optional web login, factory reset, web firmware updates and configurable restart behaviour.
