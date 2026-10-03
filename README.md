@@ -2,7 +2,9 @@
 
 [![MatrixClock Improved](screenshots/matrixclock-manual-cover-v3-1-2.png)](https://github.com/maddenste/MatrixClock-Improved/releases/latest)
 
-Improved firmware for the HACK LABS MatrixClock: more accurate timekeeping, more display control and a clearer local settings page, with Home Assistant messaging.
+Improved firmware for the HACK LABS MatrixClock, with precision-focused timekeeping through automatic drift calibration, more display control and a clearer local settings page, with Home Assistant messaging.
+
+In everyday use, the clock stays very closely aligned with NTP time, maintaining excellent accuracy between synchronisations. This reflects owner experience, not a guaranteed accuracy specification for every device or network.
 
 **Check your hardware first:** this firmware is for the matching **ESP8266 MatrixClock board with 4 MB flash**. It is not a general-purpose firmware for other ESP8266 clocks.
 
