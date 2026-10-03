@@ -10,7 +10,7 @@ In everyday use, the clock stays very closely aligned with NTP time, maintaining
 
 ## What improves over the stock firmware?
 
-- **Automatic clock drift calibration using NTP:** learns the ESP8266 clock's fast/slow error and applies a stored correction between synchronisations. The web page shows learning progress and the correction in use.
+- **Automatic clock drift calibration using NTP:** learns the clock's quartz oscillator error rate and automatically adjusts its timing to stay closely aligned with NTP between synchronisations. The web page shows learning progress and the correction in use.
 - **More robust time synchronisation:** checks NTP replies, filters uncertain measurements and retains the last good correction. The battery-backed DS3231 remains available when network time is unavailable.
 - **Flexible timezone and DST settings:** choose from 40 regional presets, disable seasonal changes or enter a custom POSIX rule.
 - **More display control:** orientation, brightness, separators, animations and date scrolling, with display changes applied without a reboot.
