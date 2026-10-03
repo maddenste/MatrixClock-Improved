@@ -12,7 +12,7 @@ Improved firmware for the HACK LABS MatrixClock: more accurate timekeeping, more
 - **More robust time synchronisation:** checks NTP replies, filters uncertain measurements and retains the last good correction. The battery-backed DS3231 remains available when network time is unavailable.
 - **Flexible timezone and DST settings:** choose from 40 regional presets, disable seasonal changes or enter a custom POSIX rule.
 - **More display control:** orientation, brightness, separators, animations and date scrolling, with display changes applied without a reboot.
-- **Improved stopwatch:** normal and hundredths-of-a-second modes, recent results and extended timing without the earlier microsecond-counter wrap.
+- **Added stopwatch:** normal and hundredths-of-a-second modes, recent results and extended timing, controlled using the clock's existing buttons—no additional hardware required.
 - **A rebuilt web interface:** separate settings and live status, a display preview, uptime, NTP diagnostics and calibration information.
 - **Home Assistant integration:** send scrolling messages with a selectable number of passes and read the RTC's internal temperature through a local HTTP API.
 - **Simpler setup and maintenance:** phone-based Wi-Fi setup, optional web login, factory reset, web firmware updates and configurable restart behaviour.
@@ -31,7 +31,7 @@ No compiling or source editing is needed. Download **`MatrixClock_Improved_v3_1_
 
 ## Make it your clock
 
-Set your Wi-Fi, timezone, NTP provider and display preferences in the browser. Use the physical button for date display, stopwatch control and message cancellation.
+Set your Wi-Fi, timezone, NTP provider and display preferences in the browser. The firmware also makes use of the clock's existing buttons for date display, stopwatch control and message cancellation.
 
 For automation, follow the [Home Assistant and API guide](docs/API.md). Keep the clock on a trusted local network: its web interface uses HTTP, not HTTPS. Do not expose it directly to the internet.
 
