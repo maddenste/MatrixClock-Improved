@@ -2,7 +2,7 @@
 
 [![MatrixClock Improved](screenshots/matrixclock-manual-cover-v3-1-2.png)](https://github.com/maddenste/MatrixClock-Improved/releases/latest)
 
-Improved firmware for the HACK LABS MatrixClock, with precision-focused timekeeping through automatic drift calibration, more display control and a clearer local settings page, with Home Assistant messaging.
+Improved HACK LABS MatrixClock firmware with accurate timekeeping, flexible display settings and Home Assistant integration.
 
 In everyday use, the clock stays very closely aligned with NTP time, maintaining excellent accuracy between synchronisations.
 
@@ -15,7 +15,7 @@ In everyday use, the clock stays very closely aligned with NTP time, maintaining
 - **Flexible timezone and DST settings:** choose from 40 regional presets, disable seasonal changes or enter a custom POSIX rule.
 - **More display control:** orientation, brightness, separators, animations and date scrolling, with display changes applied without a reboot.
 - **Added stopwatch:** normal and hundredths-of-a-second modes, recent results and extended timing, controlled using the clock's existing buttons—no additional hardware required.
-- **Multi-function button:** uses the clock's existing button to show the date, enter the stopwatch, start/stop/resume timing, reset a stopped result and return to the clock. It also cancels scrolling messages and provides a warning-protected factory reset. See [button controls](docs/SETTINGS.md#multi-function-button).
+- **Multi-function button:** show the date, control the stopwatch, cancel messages and perform a warning-protected factory reset using the existing button. See [button controls](docs/SETTINGS.md#multi-function-button).
 - **A rebuilt web interface:** separate settings and live status, a display preview, uptime, NTP diagnostics and calibration information.
 - **Home Assistant integration:** send scrolling messages with a selectable number of passes and read the RTC's internal temperature through a local HTTP API.
 - **Simpler setup and maintenance:** phone-based Wi-Fi setup, optional web login, factory reset, web firmware updates and configurable restart behaviour.
@@ -36,11 +36,11 @@ No compiling or source editing is needed. Download **`MatrixClock_Improved_v3_1_
 
 [Example MatrixClock listing on AliExpress](https://www.aliexpress.com/item/1005005998498827.html).
 
-Seller listings and hardware revisions can change. This is a buying reference, not a guarantee of compatibility: confirm the matching HACK LABS ESP8266 board with 4 MB flash before buying or installing this firmware.
+Buying reference only: confirm the matching HACK LABS ESP8266 board with 4 MB flash. Listings and hardware revisions can change.
 
 ## Make it your clock
 
-Set your Wi-Fi, timezone, NTP provider and display preferences in the browser. The firmware also makes use of the clock's existing buttons for date display, stopwatch control and message cancellation.
+Set your Wi-Fi, timezone, NTP server and display preferences in the browser.
 
 For automation, follow the [Home Assistant and API guide](docs/API.md). Keep the clock on a trusted local network: its web interface uses HTTP, not HTTPS. Do not expose it directly to the internet.
 

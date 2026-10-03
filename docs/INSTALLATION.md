@@ -2,128 +2,53 @@
 
 [Back to the project](../README.md)
 
-For the matching **4 MB ESP8266 HACK LABS MatrixClock** only. No compiling is required.
+For the matching **4 MB ESP8266 HACK LABS MatrixClock** only. No compiling is needed.
 
-## 1. Download the firmware
+**Update through your browser using the steps below.** If the clock cannot be reached, use the separate [USB installation guide](USB_INSTALLATION.md).
 
-Open the [latest release](https://github.com/maddenste/MatrixClock-Improved/releases/latest) and download:
+## 1. Download
 
-- **`MatrixClock_Improved_v3_1_2_OTA.bin`** — the firmware.
-- **`SHA256SUMS.txt`** — its integrity checksum.
+From the [latest release](https://github.com/maddenste/MatrixClock-Improved/releases/latest), download **`MatrixClock_Improved_v3_1_2_OTA.bin`** and **`SHA256SUMS.txt`** under **Assets**, not the Source code ZIP.
 
-Use the release **Assets**, not the Source code ZIP. The ZIP contains the source, not the ready-to-upload binary. One binary covers both installation methods below; no separate Factory image is needed.
+<details>
+<summary>Check the download (SHA-256)</summary>
 
-### Verify downloaded files
-
-On Windows 11, run this from the release folder:
+On Windows 11, open a terminal in the download folder and run:
 
 ```cmd
 certutil -hashfile MatrixClock_Improved_v3_1_2_OTA.bin SHA256
 ```
 
-Compare the result with the v3.1.2 `SHA256SUMS.txt`. The same verified OTA file
-is used for web updates and clean USB installations. The corresponding source
-is maintained in this repository.
+Compare the result with `SHA256SUMS.txt`. Do not install the file if they differ.
 
-## 2. Choose how to install
+</details>
 
-**Clock reachable in your browser?** Use the web update below. This is the simplest route.
+## 2. Upload
 
-**Clock unreachable, or starting from a clean device?** Use [USB installation](#clean-installation-over-usb). It erases all settings and calibration.
+**Keep power connected. Do not reset the clock during the upload.**
 
-### Web update
+1. On the same Wi-Fi/LAN as the clock, open `http://CLOCK-IP/update`, replacing `CLOCK-IP` with its address—for example, `http://192.168.0.10/update`. Improved displays its IP address during startup; for stock firmware, check your router's connected-device list.
+2. Sign in if requested. Stock HACK LABS firmware uses username **`nick`** and password **`nick`**; an existing Improved installation uses your saved credentials.
+3. Select the downloaded `.bin` and start the upload (**Upload and reboot** on Improved).
+4. Wait for the clock to restart.
 
-Keep power connected throughout the update.
+**Upgrading from stock firmware?** Once Improved has started, open **Settings > Factory reset** to clear obsolete settings. This also clears Wi-Fi credentials and calibration; then follow step 3 below.
 
-#### Upgrading directly from the original HACK LABS firmware
+**Already running Improved?** No factory reset is normally needed. Your saved configuration remains in use.
 
-1. Find the clock's current IP address on the local network.
-2. Open `http://<device-ip>/update` in a browser. For example:
-   `http://192.168.0.10/update`.
-3. Sign in to the original firmware's update page with:
-   - Username: `nick`
-   - Password: `nick`
-4. Select `MatrixClock_Improved_v3_1_2_OTA.bin`.
-5. Start the update and wait for the clock to restart. Do not remove power or
-   reset the clock while the firmware is being written.
-6. Confirm that MatrixClock Improved has started. Then open **Settings** and
-   select **Factory reset**. This is recommended after upgrading from the
-   original firmware so old settings cannot remain in use.
-7. After the factory reset, connect to the open `MatrixClock` setup network,
-   open `http://192.168.4.1`, and select the home Wi-Fi network again.
-8. Open the IP address shown during boot. On the first normal-page visit,
-   choose a username and password or leave both fields blank for no web login.
+## 3. Set up after a reset or clean installation
 
-#### Updating an existing MatrixClock Improved installation
+1. Connect your phone or computer to the clock's **`MatrixClock`** Wi-Fi network.
+2. Open **[192.168.4.1](http://192.168.4.1/)**, select your home Wi-Fi and enter its password.
+3. Rejoin your home network and open the IP address shown on the clock during startup.
+4. Choose web login credentials, or leave both fields blank for no login. In **Settings**, select your timezone and NTP server.
 
-1. Find the clock's current IP address.
-2. Open `http://<device-ip>/update` in a browser.
-3. Sign in with the clock's current username and password if web security is
-   enabled.
-4. Select `MatrixClock_Improved_v3_1_2_OTA.bin`.
-5. Select **Upload and reboot** and wait for the clock to restart. Do not remove
-   power during the update.
+Keep the clock on a trusted local network; do not expose its HTTP web interface directly to the internet.
 
-A newly reset MatrixClock Improved installation asks you to choose credentials
-on its first normal-page visit. Leave both fields blank to keep local web access
-open.
+## Need help?
 
-### Clean installation over USB
+- **Cannot find the clock:** check your router's connected-device list. On Improved firmware, press the hardware reset button to show the startup IP address again.
+- **Cannot open the page:** check that your device is on the same LAN. If necessary, use [USB installation](USB_INSTALLATION.md), which erases saved settings.
+- **No NTP time:** check Wi-Fi and NTP settings. RTC backup time does not mean an NTP sync succeeded.
 
-Use this method when the clock cannot be reached through its web interface, or
-when a completely clean installation is wanted. It erases all flash contents,
-including the existing firmware, Wi-Fi data, settings and calibration records,
-then installs v3.1.2 directly from the normal OTA binary.
-
-1. Install or download [Espressif esptool](https://github.com/espressif/esptool/releases).
-   Follow the official [installation instructions](https://docs.espressif.com/projects/esptool/en/latest/esp8266/installation.html) and [serial-port options](https://docs.espressif.com/projects/esptool/en/latest/esp8266/esptool/basic-options.html).
-2. Connect the MatrixClock by USB and close Arduino Serial Monitor or any
-   other program using the COM port.
-3. Open a terminal in the folder containing the downloaded `.bin`. Replace `COM3` below with the clock's Windows 11 COM port:
-
-```cmd
-esptool --chip esp8266 --port COM3 --baud 115200 erase-flash
-```
-
-4. When the erase completes successfully, write the v3.1.2 firmware at address
-   `0x000000`:
-
-```cmd
-esptool --chip esp8266 --port COM3 --baud 115200 write-flash 0x000000 MatrixClock_Improved_v3_1_2_OTA.bin
-```
-
-5. Connect to the `MatrixClock` setup Wi-Fi network and open
-   `http://192.168.4.1/` to connect the clock to the home network.
-6. Open the IP address shown during the next boot. On the first normal-page
-   visit, choose new web credentials or leave both fields blank for no web
-   login.
-
-These commands use current esptool command names. Older versions use `erase_flash` and `write_flash`. If installed with Python but the command is not found, use `python -m esptool` instead. For a downloaded Windows executable, put `esptool.exe` beside the `.bin` and use `.\esptool.exe` instead of `esptool`.
-
-## 3. Set up your clock
-
-After a clean install, the clock starts its open setup access point:
-
-```text
-Wi-Fi name: MatrixClock
-Setup address: http://192.168.4.1/
-```
-
-Connect a phone or computer to that Wi-Fi network, open the setup address,
-choose the home Wi-Fi network, enter its password, and save.
-Once the clock reconnects to the home network, open the IP address shown on its
-boot-up display. To show the address again, press the hardware reset button to
-restart the device.
-
-The normal web interface includes all clock, timezone, NTP, chronograph,
-display, API, authentication, calibration, and firmware-update settings.
-
-## If something goes wrong
-
-- **No web page:** use the IP address shown during boot and make sure your phone or computer is on the same LAN.
-- **No home Wi-Fi saved:** join `MatrixClock` and open `http://192.168.4.1/`.
-- **No network time:** check the Wi-Fi connection and NTP settings. RTC fallback is not a successful NTP sync.
-- **USB port busy:** close Serial Monitor and any other program using that port.
-- **Still stuck:** [report the problem](https://github.com/maddenste/MatrixClock-Improved/issues) with your firmware version, installation method and exact error. Do not include Wi-Fi passwords.
-
-See the [user manual](../MatrixClock_Improved_v3_1_2_User_Manual.pdf) for everyday operation.
+[User manual](../MatrixClock_Improved_v3_1_2_User_Manual.pdf) · [Settings and button controls](SETTINGS.md) · [Report a problem](https://github.com/maddenste/MatrixClock-Improved/issues)

@@ -31,6 +31,9 @@ Need a custom rule? Use the [Techlogics POSIX timezone generator](https://techlo
 
 Copy the POSIX string, not an IANA name such as `Europe/London` or a generated code snippet. Check the generated DST dates against your region's current rules; the generator describes its output as indicative. Rules must fit the clock's 63-character limit.
 
+<details>
+<summary>Upgrading older timezone settings</summary>
+
 Upgrades retain recognised regional choices and valid custom rules. Older fixed
 UTC selections remain fixed and appear as **saved fixed offset**; select a
 regional preset if you want automatic DST. The firmware cannot infer a city
@@ -39,13 +42,19 @@ Settings. An invalid custom rule is cleared and falls back to the selected
 location's Automatic mode; an unknown location retains the old legacy-offset
 fallback. Please check the selection if the recovery warning appears.
 
-When startup NTP is
-unavailable and a verified saved correction plus plausible RTC calendar are
+</details>
+
+<details>
+<summary>How RTC backup behaves without NTP</summary>
+
+When startup NTP is unavailable and a verified saved correction plus plausible RTC calendar are
 available, the software clock enters compensated RTC holdover and retries NTP.
 The first accepted reply re-anchors time and updates the RTC. An RTC seed is
 not treated as a drift measurement. Without a verified saved correction, the
 clock continues using direct RTC fallback. The RTC stores local time and cannot
 independently correct a missed daylight-saving transition while NTP is absent.
+
+</details>
 
 ## Display and maintenance
 
