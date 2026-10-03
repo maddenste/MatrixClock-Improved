@@ -47,6 +47,16 @@ Restart modes let you choose no scheduled restart, a daily restart or recovery f
 
 Factory reset clears saved settings, Wi-Fi and calibration. Resetting drift calibration clears its measurements and restarts learning; it is separate from a factory reset.
 
+## Multi-function button
+
+The firmware repurposes the existing GPIO0 button for everyday controls; no extra button or wiring is needed. The hardware reset button remains separate.
+
+- **Clock display:** short press to scroll the date; hold for one second, then release, to enter the stopwatch.
+- **Stopwatch:** short press to start, stop or resume timing.
+- **Stopped stopwatch:** hold for one second to clear a non-zero result. With the result at zero, hold for one second again to return to the clock.
+- **Scrolling API message:** press to cancel the remaining passes after the current pass. A second press within one second returns immediately to the clock.
+- **Factory reset:** hold continuously for at least 12.5 seconds, then release. A flashing **RESET** warning begins after eight seconds; releasing before 12.5 seconds cancels the reset. A completed reset erases settings, Wi-Fi credentials and calibration.
+
 ## Local access
 
 Optional web credentials protect the local pages and API. Leaving both fields blank disables web login. The connection remains HTTP: use a trusted LAN or VPN, not internet port forwarding.

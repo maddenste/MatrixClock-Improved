@@ -13,6 +13,7 @@ Improved firmware for the HACK LABS MatrixClock: more accurate timekeeping, more
 - **Flexible timezone and DST settings:** choose from 40 regional presets, disable seasonal changes or enter a custom POSIX rule.
 - **More display control:** orientation, brightness, separators, animations and date scrolling, with display changes applied without a reboot.
 - **Added stopwatch:** normal and hundredths-of-a-second modes, recent results and extended timing, controlled using the clock's existing buttons—no additional hardware required.
+- **Multi-function button:** uses the clock's existing button to show the date, enter the stopwatch, start/stop/resume timing, reset a stopped result and return to the clock. It also cancels scrolling messages and provides a warning-protected factory reset. See [button controls](docs/SETTINGS.md#multi-function-button).
 - **A rebuilt web interface:** separate settings and live status, a display preview, uptime, NTP diagnostics and calibration information.
 - **Home Assistant integration:** send scrolling messages with a selectable number of passes and read the RTC's internal temperature through a local HTTP API.
 - **Simpler setup and maintenance:** phone-based Wi-Fi setup, optional web login, factory reset, web firmware updates and configurable restart behaviour.
