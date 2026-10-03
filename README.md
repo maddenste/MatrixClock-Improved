@@ -30,6 +30,12 @@ No compiling or source editing is needed. Download **`MatrixClock_Improved_v3_1_
 - [User manual](MatrixClock_Improved_v3_1_2_User_Manual.pdf)
 - [Web interface screenshots](docs/WEB_INTERFACE.md)
 
+## Buying a clock
+
+[Example MatrixClock listing on AliExpress](https://www.aliexpress.com/item/1005005998498827.html).
+
+Seller listings and hardware revisions can change. This is a buying reference, not a guarantee of compatibility: confirm the matching HACK LABS ESP8266 board with 4 MB flash before buying or installing this firmware.
+
 ## Make it your clock
 
 Set your Wi-Fi, timezone, NTP provider and display preferences in the browser. The firmware also makes use of the clock's existing buttons for date display, stopwatch control and message cancellation.
