@@ -27,6 +27,10 @@ change seasonally. The menu displays standard offsets; the active summer offset
 may differ. These 40 presets reflect IANA 2026.3 rules and require a firmware
 update if governments change their timezone laws.
 
+Need a custom rule? Use the [Techlogics POSIX timezone generator](https://techlogics.net/electronics/timezone-db.php), also linked in our CH899 guide. Select your city or timezone and choose **Copy POSIX string**. In the clock's time settings, select **Custom rule**, paste the string into the custom-rule field, then choose **Save and reboot**.
+
+Copy the POSIX string, not an IANA name such as `Europe/London` or a generated code snippet. Check the generated DST dates against your region's current rules; the generator describes its output as indicative. Rules must fit the clock's 63-character limit.
+
 Upgrades retain recognised regional choices and valid custom rules. Older fixed
 UTC selections remain fixed and appear as **saved fixed offset**; select a
 regional preset if you want automatic DST. The firmware cannot infer a city
